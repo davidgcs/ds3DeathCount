@@ -1,3 +1,0 @@
-[submodule "DarkSouls_DeathCount/ProcessMemory"]
-	path = DarkSouls_DeathCount/ProcessMemory
-	url = git@bitbucket.org:igromanru/csharp-processmemory.git
