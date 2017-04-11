@@ -70,7 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeathCount\Logic.cs" />
+    <Compile Include="DeathCount\DeathCounter.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

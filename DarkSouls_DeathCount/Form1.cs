@@ -7,14 +7,14 @@ namespace DarkSouls_DeathCount
 {
     public partial class Form1 : Form
     {
-        private Logic Logic { set; get; }
+        private DeathCounter DeathCounter { set; get; }
 
         private string deaths = "0";    
         public Form1()
         {
             InitializeComponent();
-            loadFile();
-            Logic = new Logic();
+            //loadFile();
+            DeathCounter = new DeathCounter();
         }
 
         private void loadFile()
@@ -79,6 +79,11 @@ namespace DarkSouls_DeathCount
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            lblDeaths.Text = DeathCounter.GetDeaths().ToString();
         }
     }
 }
