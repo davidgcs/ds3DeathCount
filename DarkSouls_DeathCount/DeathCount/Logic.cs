@@ -25,7 +25,7 @@ namespace DarkSouls_DeathCount.DeathCount
 
         public void ReadBasePointer()
         {
-            DeathAddress = ProcessMemory.ReadPointer64(new IntPtr(0x14473A818), new int[] { 0x98 });
+            DeathAddress = ProcessMemory.ReadPointer(0x14473a818, new int[] { 0x98 });
             Console.WriteLine(ProcessMemory.ReadMemoryInt(DeathAddress));
         }
     }
