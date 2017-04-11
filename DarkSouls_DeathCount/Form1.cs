@@ -1,24 +1,28 @@
-﻿using DarkSouls_DeathCount.DeathCount;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DarkSouls_DeathCount
 {
     public partial class Form1 : Form
     {
-        private Logic Logic { set; get; }
-
-        private string deaths = "0";    
+        private String deaths = "0";    
         public Form1()
         {
             InitializeComponent();
             loadFile();
-            Logic = new Logic();
         }
 
         private void loadFile()
         {
+
             bool exists = File.Exists("death_count.ds3") ? true : false;
 
             if (exists)
