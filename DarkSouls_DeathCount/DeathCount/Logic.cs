@@ -6,7 +6,10 @@ namespace DarkSouls_DeathCount.DeathCount
     class Logic
     {
         private ProcessMemory ProcessMemory { get; set; }
-        public IntPtr DeathAddress { get; private set; }
+
+        private IntPtr _seathAddress;
+
+        public IntPtr DeathAddress => _seathAddress;
 
         public Logic()
         {
@@ -25,8 +28,14 @@ namespace DarkSouls_DeathCount.DeathCount
 
         public void ReadBasePointer()
         {
-            DeathAddress = ProcessMemory.ReadPointer(0x14473a818, new int[] { 0x98 });
-            Console.WriteLine(ProcessMemory.ReadMemoryInt(DeathAddress));
+            if (ProcessMemory.ReadPointer(0x14473a818, new int[] {0x98}, out _seathAddress))
+            {
+                int deaths = 0;
+                if (ProcessMemory.ReadMemoryInt(_seathAddress, out deaths))
+                {
+                    Console.WriteLine(deaths);
+                }
+            }
         }
     }
 }
