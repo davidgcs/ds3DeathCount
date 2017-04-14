@@ -42,6 +42,16 @@ namespace DarkSouls_DeathCount
         private void setDeathsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //maybe allow the user to change deaths value in the memory with CheatEngine
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to change your deaths number?", "Caution!", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                //Must prevent the user to set not a number value
+                string input = Microsoft.VisualBasic.Interaction.InputBox("How many times you died?", "Set deaths", lblDeaths.Text, 0, 0);
+                if (!input.Equals(""))
+                {
+                    DeathCounter.SetDeaths(int.Parse(input));
+                }
+            }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -58,7 +68,6 @@ namespace DarkSouls_DeathCount
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            if(!end)
             lblDeaths.Text = DeathCounter.GetDeaths().ToString();
         }
 

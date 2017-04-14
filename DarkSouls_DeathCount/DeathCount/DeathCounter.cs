@@ -72,5 +72,15 @@ namespace DarkSouls_DeathCount.DeathCount
             }
             return deaths;
         }
+        
+        public bool SetDeaths(int deaths)
+        {
+            if (!_deathAddress.Equals(IntPtr.Zero))
+            {
+                ProcessMemory.WriteMemoryInt(_deathAddress, deaths);
+                return true;
+            }
+            return false;
+        }
     }
 }
