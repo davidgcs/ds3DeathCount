@@ -67,7 +67,7 @@ namespace DarkSouls_DeathCount.DeathCount
             {
                 if (ProcessMemory.ReadMemoryInt(_deathAddress, out deaths))
                 {
-                    Console.WriteLine(deaths);
+                    Console.WriteLine("Deaths: " + deaths);
                 }
             }
             return deaths;

@@ -1,6 +1,6 @@
 ﻿using DarkSouls_DeathCount.DeathCount;
 using System;
-using System.IO;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace DarkSouls_DeathCount
@@ -8,72 +8,47 @@ namespace DarkSouls_DeathCount
     public partial class Form1 : Form
     {
         private DeathCounter DeathCounter { set; get; }
-
-        private string deaths = "0";    
+        
+        private bool end = false; 
         public Form1()
         {
             InitializeComponent();
-            //loadFile();
-            DeathCounter = new DeathCounter();
-        }
-
-        private void loadFile()
-        {
-            bool exists = File.Exists("death_count.ds3") ? true : false;
-
-            if (exists)
+            try
             {
-                //read file
-                StreamReader file = File.OpenText("death_count.ds3");
-                deaths = file.ReadLine();
-                file.Close();             
+                DeathCounter = new DeathCounter();
             }
-            else
+            catch(Exception e)
             {
-                //create file
-                StreamWriter file = File.CreateText("death_count.ds3");                
-                file.Write(deaths);
-                file.Close();             
+                //I must split this into two messages
+                DialogResult ok = MessageBox.Show("Insufficient permissions or the game is not running. Try it again with admin rights.", "Error");
+
+                this.Close();
             }
-
-            lblDeaths.Text = deaths;
+            
+            //starts the process that count deaths every .5 seconds
+            new Thread(new ThreadStart(runThread)).Start();            
         }
-
-        private void btnDie_Click(object sender, EventArgs e)
+        
+        private void runThread()
         {
-            deaths = (long.Parse(this.lblDeaths.Text) + 1).ToString();
-            lblDeaths.Text = deaths;
-
-            StreamWriter file = new StreamWriter("death_count.ds3");
-            file.Write(deaths);
-            file.Close();
+            while (!end)
+            {
+                Thread.Sleep(500);               
+                //lblDeaths.Text = new DeathCounter().GetDeaths().ToString();
+                Console.WriteLine("thread working");
+            }
         }
 
         private void setDeathsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            String numDeaths = this.lblDeaths.Text;
-            DialogResult result = MessageBox.Show("Do you really want to change your death count manually?", "Important", MessageBoxButtons.YesNo);
-            if (result == DialogResult.Yes)
-            {
-                string input = Microsoft.VisualBasic.Interaction.InputBox("How many deaths you have?",
-                       "Deaths",
-                       numDeaths);
-                if (input.Equals("")) //user clicks on cancel
-                {
-                    this.lblDeaths.Text = numDeaths;
-                }
-                else
-                {
-                    lblDeaths.Text = input;
-                }
-            }
+            //maybe allow the user to change deaths value in the memory with CheatEngine
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            StreamWriter file = new StreamWriter("death_count.ds3");
-            file.Write(lblDeaths.Text);
-            file.Close();
+            //Stop all the process & show created by
+            end = true;
+            MessageBox.Show("Created by davinxy01 and igromanru", "Credits");            
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -83,7 +58,13 @@ namespace DarkSouls_DeathCount
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            if(!end)
             lblDeaths.Text = DeathCounter.GetDeaths().ToString();
+        }
+
+        private void lblDeaths_Click(object sender, EventArgs e)
+        {
+            this.ActiveControl = lblDisableFocus;
         }
     }
 }
