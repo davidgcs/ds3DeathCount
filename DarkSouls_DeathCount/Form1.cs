@@ -1,4 +1,5 @@
 ﻿using DarkSouls_DeathCount.DeathCount;
+using IgroGadgets.Memory;
 using System;
 using System.Threading;
 using System.Windows.Forms;
@@ -17,14 +18,19 @@ namespace DarkSouls_DeathCount
             {
                 DeathCounter = new DeathCounter();
             }
-            catch(Exception e)
+            catch(NoAdminPrivilegesException)
             {
-                //I must split this into two messages
-                DialogResult ok = MessageBox.Show("Insufficient permissions or the game is not running. Try it again with admin rights.", "Error");
+                DialogResult ok = MessageBox.Show("Insufficient permissions. Try it again with admin rights.", "Error");
 
-                this.Close();
+                Environment.Exit(0);
             }
-            
+            catch (NoProcessFoundException)
+            {
+                DialogResult ok = MessageBox.Show("The game is not running. Start the game before launching the application.", "Error");
+
+                Environment.Exit(0);                
+            }
+
             //starts the process that count deaths every .5 seconds
             new Thread(new ThreadStart(runThread)).Start();            
         }
