@@ -48,7 +48,7 @@ namespace DarkSouls_DeathCount
                 else
                 {
                     this.lblDeaths.Text = DeathCounter.GetDeaths().ToString(); ;
-                }                
+                }            
             }
         }
 
