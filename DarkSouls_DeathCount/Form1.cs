@@ -8,6 +8,7 @@ namespace DarkSouls_DeathCount
 {
     public partial class Form1 : Form
     {
+        private int language = 0;
         private DeathCounter DeathCounter { set; get; }
 
         private bool end = false;
@@ -20,13 +21,29 @@ namespace DarkSouls_DeathCount
             }
             catch (NoAdminPrivilegesException)
             {
-                DialogResult ok = MessageBox.Show("Insufficient permissions. Try it again with admin rights.", "Error");
+                if (language == 0)
+                {
+                    DialogResult ok = MessageBox.Show("Insufficient permissions. Try it again with admin rights.", "Error");
+                }
+
+                if(language == 1)
+                {
+                    DialogResult ok = MessageBox.Show("Permisos insuficientes. Inténtalo de nuevo ejecutándo como administrador.", "Error");
+                }
 
                 Environment.Exit(0);
             }
             catch (NoProcessFoundException)
             {
-                DialogResult ok = MessageBox.Show("The game is not running. Start the game before launching the application.", "Error");
+                if (language == 0)
+                {
+                    DialogResult ok = MessageBox.Show("The game is not running. Start the game and load a savegame before launching the application.", "Error");
+                }
+
+                if (language == 1)
+                {
+                    DialogResult ok = MessageBox.Show("El juego no esta en funcionamiento. Inicia el juego y selecciona una partida antes de ejecutar la aplicación", "Error");
+                }
 
                 Environment.Exit(0);
             }
@@ -58,20 +75,46 @@ namespace DarkSouls_DeathCount
         private void setDeathsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //maybe allow the user to change deaths value in the memory with CheatEngine
-            DialogResult dialogResult = MessageBox.Show("Are you sure you want to change your deaths number?", "Caution!", MessageBoxButtons.YesNo);
+            DialogResult dialogResult;
+
+            if (language == 0)
+            {
+                dialogResult = MessageBox.Show("Are you sure you want to change your deaths number?", "Caution!", MessageBoxButtons.YesNo);
+            }
+            else
+            {
+                dialogResult = MessageBox.Show("¿Estás seguro de que quieres cambiar tu número de muertes?", "Cuidado!", MessageBoxButtons.YesNo);
+            }
+
             if (dialogResult == DialogResult.Yes)
             {
                 //Must prevent the user to set not a number value - done
-                string input = Microsoft.VisualBasic.Interaction.InputBox("How many times you died?", "Set deaths", lblDeaths.Text);
+                string input;
+                if (language == 0)
+                {
+                    input = Microsoft.VisualBasic.Interaction.InputBox("How many times you died?", "Set deaths", lblDeaths.Text);
+                }
+                else
+                {
+                    input = Microsoft.VisualBasic.Interaction.InputBox("¿Cuántas veces has muerto?", "Cambiar muertes", lblDeaths.Text);
+                }
+
                 if (!input.Equals(""))
                 {
                     try
                     {
                         DeathCounter.SetDeaths(int.Parse(input));
                     }
-                    catch(Exception)
+                    catch (Exception)
                     {
-                        MessageBox.Show("You must set a numeric value", "Error");
+                        if (language == 0)
+                        {
+                            MessageBox.Show("You must set a numeric value", "Error");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Debes dar un valor numérico", "Error");
+                        }
                     }
                 }
             }
@@ -81,7 +124,14 @@ namespace DarkSouls_DeathCount
         {
             //Stop all the process & show created by
             end = true;
-            MessageBox.Show("Created by davinxy01 and igromanru", "Credits");
+            if (language == 0)
+            {
+                MessageBox.Show("Created by davinxy01 and igromanru", "Credits");
+            }
+            else
+            {
+                MessageBox.Show("Creado por davinxy01 y igromanru", "Créditos");
+            }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -97,6 +147,32 @@ namespace DarkSouls_DeathCount
         private void lblDeaths_Click(object sender, EventArgs e)
         {
             this.ActiveControl = lblDisableFocus;
+        }
+
+        private void spanishToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            language = 1;
+            englishToolStripMenuItem.Checked = false;
+            spanishToolStripMenuItem.Checked = true;
+
+            toolsToolStripMenuItem.Text = "Herramientas";
+            setDeathsToolStripMenuItem.Text = "Cambiar Muertes";
+            languageToolStripMenuItem.Text = "Idioma";
+            exitToolStripMenuItem.Text = "Salir";
+            label1.Text = "VECES";
+        }
+
+        private void englishToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            language = 0;
+            englishToolStripMenuItem.Checked = true;
+            spanishToolStripMenuItem.Checked = false;
+
+            toolsToolStripMenuItem.Text = "Tools";
+            setDeathsToolStripMenuItem.Text = "Set Deaths";
+            languageToolStripMenuItem.Text = "Language";
+            exitToolStripMenuItem.Text = "Exit";
+            label1.Text = "TIMES";
         }
     }
 }

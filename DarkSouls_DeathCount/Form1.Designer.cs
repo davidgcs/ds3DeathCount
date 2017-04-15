@@ -32,12 +32,15 @@
             this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setDeathsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.setDeathsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblDeaths = new System.Windows.Forms.TextBox();
             this.lblDisableFocus = new System.Windows.Forms.Label();
+            this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.englishToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.spanishToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -69,11 +72,19 @@
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.setDeathsToolStripMenuItem,
+            this.languageToolStripMenuItem,
             this.toolStripMenuItem1,
             this.exitToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(72, 34);
             this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // setDeathsToolStripMenuItem
+            // 
+            this.setDeathsToolStripMenuItem.Name = "setDeathsToolStripMenuItem";
+            this.setDeathsToolStripMenuItem.Size = new System.Drawing.Size(240, 34);
+            this.setDeathsToolStripMenuItem.Text = "Set Deaths";
+            this.setDeathsToolStripMenuItem.Click += new System.EventHandler(this.setDeathsToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -92,19 +103,12 @@
             // 
             this.pictureBox1.Image = global::DarkSouls_DeathCount.Properties.Resources.You_Died;
             this.pictureBox1.Location = new System.Drawing.Point(59, 78);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(807, 402);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
-            // 
-            // setDeathsToolStripMenuItem
-            // 
-            this.setDeathsToolStripMenuItem.Name = "setDeathsToolStripMenuItem";
-            this.setDeathsToolStripMenuItem.Size = new System.Drawing.Size(240, 34);
-            this.setDeathsToolStripMenuItem.Text = "Set Deaths";
-            this.setDeathsToolStripMenuItem.Click += new System.EventHandler(this.setDeathsToolStripMenuItem_Click);
             // 
             // lblDeaths
             // 
@@ -139,6 +143,31 @@
             this.lblDisableFocus.Text = "davinxy01 & igromanru";
             this.lblDisableFocus.Visible = false;
             // 
+            // languageToolStripMenuItem
+            // 
+            this.languageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.englishToolStripMenuItem,
+            this.spanishToolStripMenuItem});
+            this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
+            this.languageToolStripMenuItem.Size = new System.Drawing.Size(240, 34);
+            this.languageToolStripMenuItem.Text = "Language";
+            // 
+            // englishToolStripMenuItem
+            // 
+            this.englishToolStripMenuItem.Checked = true;
+            this.englishToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.englishToolStripMenuItem.Name = "englishToolStripMenuItem";
+            this.englishToolStripMenuItem.Size = new System.Drawing.Size(240, 34);
+            this.englishToolStripMenuItem.Text = "English";
+            this.englishToolStripMenuItem.Click += new System.EventHandler(this.englishToolStripMenuItem_Click);
+            // 
+            // spanishToolStripMenuItem
+            // 
+            this.spanishToolStripMenuItem.Name = "spanishToolStripMenuItem";
+            this.spanishToolStripMenuItem.Size = new System.Drawing.Size(240, 34);
+            this.spanishToolStripMenuItem.Text = "Español";
+            this.spanishToolStripMenuItem.Click += new System.EventHandler(this.spanishToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
@@ -154,7 +183,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(933, 1116);
             this.MinimumSize = new System.Drawing.Size(933, 1028);
@@ -182,6 +211,9 @@
         private System.Windows.Forms.ToolStripMenuItem setDeathsToolStripMenuItem;
         private System.Windows.Forms.TextBox lblDeaths;
         private System.Windows.Forms.Label lblDisableFocus;
+        private System.Windows.Forms.ToolStripMenuItem languageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem englishToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem spanishToolStripMenuItem;
     }
 }
 
