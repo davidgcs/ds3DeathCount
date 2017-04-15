@@ -41,14 +41,17 @@ namespace DarkSouls_DeathCount
             {
                 Thread.Sleep(500);
 
-                if (this.lblDeaths.InvokeRequired)
+                if (DeathCounter.GetDeaths() != 0) //this save the value after closing the game
                 {
-                    this.lblDeaths.BeginInvoke((MethodInvoker)delegate () { this.lblDeaths.Text = DeathCounter.GetDeaths().ToString(); ; });
+                    if (this.lblDeaths.InvokeRequired)
+                    {
+                        this.lblDeaths.BeginInvoke((MethodInvoker)delegate () { this.lblDeaths.Text = DeathCounter.GetDeaths().ToString(); });
+                    }
+                    else
+                    {
+                        this.lblDeaths.Text = DeathCounter.GetDeaths().ToString();
+                    }
                 }
-                else
-                {
-                    this.lblDeaths.Text = DeathCounter.GetDeaths().ToString(); ;
-                }            
             }
         }
 
@@ -58,11 +61,18 @@ namespace DarkSouls_DeathCount
             DialogResult dialogResult = MessageBox.Show("Are you sure you want to change your deaths number?", "Caution!", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                //Must prevent the user to set not a number value
-                string input = Microsoft.VisualBasic.Interaction.InputBox("How many times you died?", "Set deaths", lblDeaths.Text, 0, 0);
+                //Must prevent the user to set not a number value - done
+                string input = Microsoft.VisualBasic.Interaction.InputBox("How many times you died?", "Set deaths", lblDeaths.Text);
                 if (!input.Equals(""))
                 {
-                    DeathCounter.SetDeaths(int.Parse(input));
+                    try
+                    {
+                        DeathCounter.SetDeaths(int.Parse(input));
+                    }
+                    catch(Exception)
+                    {
+                        MessageBox.Show("You must set a numeric value", "Error");
+                    }
                 }
             }
         }
