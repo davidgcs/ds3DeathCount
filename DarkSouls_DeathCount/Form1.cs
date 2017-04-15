@@ -9,8 +9,8 @@ namespace DarkSouls_DeathCount
     public partial class Form1 : Form
     {
         private DeathCounter DeathCounter { set; get; }
-        
-        private bool end = false; 
+
+        private bool end = false;
         public Form1()
         {
             InitializeComponent();
@@ -18,7 +18,7 @@ namespace DarkSouls_DeathCount
             {
                 DeathCounter = new DeathCounter();
             }
-            catch(NoAdminPrivilegesException)
+            catch (NoAdminPrivilegesException)
             {
                 DialogResult ok = MessageBox.Show("Insufficient permissions. Try it again with admin rights.", "Error");
 
@@ -28,20 +28,27 @@ namespace DarkSouls_DeathCount
             {
                 DialogResult ok = MessageBox.Show("The game is not running. Start the game before launching the application.", "Error");
 
-                Environment.Exit(0);                
+                Environment.Exit(0);
             }
 
             //starts the process that count deaths every .5 seconds
-            new Thread(new ThreadStart(runThread)).Start();            
+            new Thread(new ThreadStart(runThread)).Start();
         }
-        
+
         private void runThread()
         {
             while (!end)
             {
-                Thread.Sleep(500);               
-                //lblDeaths.Text = new DeathCounter().GetDeaths().ToString();
-                Console.WriteLine("thread working");
+                Thread.Sleep(500);
+
+                if (this.lblDeaths.InvokeRequired)
+                {
+                    this.lblDeaths.BeginInvoke((MethodInvoker)delegate () { this.lblDeaths.Text = DeathCounter.GetDeaths().ToString(); ; });
+                }
+                else
+                {
+                    this.lblDeaths.Text = DeathCounter.GetDeaths().ToString(); ;
+                }                
             }
         }
 
@@ -64,7 +71,7 @@ namespace DarkSouls_DeathCount
         {
             //Stop all the process & show created by
             end = true;
-            MessageBox.Show("Created by davinxy01 and igromanru", "Credits");            
+            MessageBox.Show("Created by davinxy01 and igromanru", "Credits");
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
